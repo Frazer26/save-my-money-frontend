@@ -1,0 +1,19 @@
+<div>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Date</th>
+    </tr>
+    <ng-container *ngFor="let item of items">
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{ item.money }}</td>
+      <td>{{ item.date }}</td>
+    </tr>
+    </ng-container>
+  </table>
+
+  <app-income-modal #incomeModal ></app-income-modal>
+
+</div>
