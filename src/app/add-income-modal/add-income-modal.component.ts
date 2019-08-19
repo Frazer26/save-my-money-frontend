@@ -40,8 +40,8 @@ export class AddIncomeModalComponent {
       .subscribe(result => {
         this.gotoIncomeList();
         this.incomeCreated.emit(result);
-        this.modal.dismissAll(true);
       });
+    this.modal.dismissAll(true);
   }
 
   gotoIncomeList() {
