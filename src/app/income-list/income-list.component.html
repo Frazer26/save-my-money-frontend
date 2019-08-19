@@ -6,14 +6,15 @@
       <th>Date</th>
     </tr>
     <ng-container *ngFor="let item of items">
-    <tr>
-      <td>{{ item.name }}</td>
-      <td>{{ item.money }}</td>
-      <td>{{ item.date }}</td>
-    </tr>
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.money }}</td>
+        <td>{{ item.date }}</td>
+      </tr>
     </ng-container>
   </table>
 
-  <app-income-modal #incomeModal ></app-income-modal>
+  <button type="button" (click)="openIncomeModal()">Add income</button>
+  <app-add-income-modal #incomeModal (incomeCreated)="getIncomeList()"></app-add-income-modal>
 
 </div>

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Item } from './item';
 import {Observable} from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +23,6 @@ export class ItemService {
   }
 
   public addItemUnderMainCategory(mainCategory: string, item: Item) {
-    return this.http.post<Item>(this.itemUrl + mainCategory, item);
+    return this.http.post<Item>(this.itemUrl + mainCategory, item, httpOptions);
   }
 }

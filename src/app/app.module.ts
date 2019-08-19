@@ -8,20 +8,22 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { IncomeListComponent } from './income-list/income-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './item.service';
-import { IncomeModalComponent } from './income-modal/income-modal.component';
+import { AddIncomeModalComponent } from './add-income-modal/add-income-modal.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     IncomeListComponent,
-    IncomeModalComponent
+    AddIncomeModalComponent
   ],
   imports: [
     NgbModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ItemService],
   bootstrap: [AppComponent]

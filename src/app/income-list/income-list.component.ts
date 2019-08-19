@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
-import { IncomeModalComponent} from '../income-modal/income-modal.component';
+import { AddIncomeModalComponent} from '../add-income-modal/add-income-modal.component';
 
 @Component({
   selector: 'app-income-list',
@@ -9,21 +9,25 @@ import { IncomeModalComponent} from '../income-modal/income-modal.component';
   styleUrls: ['./income-list.component.css']
 })
 export class IncomeListComponent implements OnInit {
-  @ViewChild('incomeModal', {static: false}) modal: IncomeModalComponent;
+  @ViewChild('incomeModal', {static: false}) modal: AddIncomeModalComponent;
 
   items: Item[];
 
   constructor(private itemService: ItemService) { }
 
   ngOnInit() {
-    this.itemService.findAll('INCOME').subscribe(data => {
-      this.items = data;
-    },
-      error => console.log(error));
+    this.getIncomeList();
   }
 
   openIncomeModal() {
     this.modal.open();
+  }
+
+  getIncomeList() {
+    this.itemService.findAll('INCOME').subscribe(data => {
+        this.items = data;
+      },
+      error => console.log(error));
   }
 
 }
