@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {NgbDateAdapter, NgbDateNativeAdapter, NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import {ItemService} from '../item.service';
 import {Item} from '../item';
@@ -46,6 +46,13 @@ export class AddIncomeModalComponent {
 
   gotoIncomeList() {
     this.router.navigate(['budget/INCOME']);
+  }
+
+  emptyItem() {
+    this.item.name = null;
+    this.item.money = null;
+    this.item.date = null;
+    return this.item;
   }
 
 }
