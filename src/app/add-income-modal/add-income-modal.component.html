@@ -34,7 +34,9 @@
           <input id="dateOfIncome" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
                  #dp="ngbDatepicker" required [(ngModel)]="item.date">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button">
+              <i class="far fa-calendar-alt"></i>
+            </button>
           </div>
         </div>
       </div>

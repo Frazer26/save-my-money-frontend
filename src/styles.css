@@ -73,7 +73,7 @@ label {
 }
 
 /* Button */
-.button, button {
+.blueButton {
   display: inline-flex;
   align-items: center;
   padding: 10px 20px;
