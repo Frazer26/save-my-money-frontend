@@ -10,13 +10,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './item.service';
 import { AddIncomeModalComponent } from './add-income-modal/add-income-modal.component';
 import {FormsModule} from '@angular/forms';
+import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal.component';
+import { ConfirmTemplateDirective } from './shared/confirm-template.directive';
+import {ConfirmService} from './shared/confirm-service';
+import {ConfirmState} from './shared/confirm-state';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     IncomeListComponent,
-    AddIncomeModalComponent
+    AddIncomeModalComponent,
+    ConfirmModalComponent,
+    ConfirmTemplateDirective
   ],
   imports: [
     NgbModule,
@@ -25,7 +31,7 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [ItemService],
+  providers: [ItemService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
