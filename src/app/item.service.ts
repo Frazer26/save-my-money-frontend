@@ -25,4 +25,8 @@ export class ItemService {
   public addItemUnderMainCategory(mainCategory: string, item: Item) {
     return this.http.post<Item>(this.itemUrl + mainCategory, item, httpOptions);
   }
+
+  public deleteItem(item: Item) {
+    return this.http.delete(this.itemUrl + 'deleteItem/' + item.id);
+  }
 }
