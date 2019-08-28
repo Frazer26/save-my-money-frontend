@@ -72,6 +72,16 @@ label {
   text-transform: uppercase;
 }
 
+/* Table */
+#tables th {
+  text-align: center;
+}
+
+#tables tr {
+  text-align: center;
+}
+
+
 /* Button */
 .blueButton {
   display: inline-flex;

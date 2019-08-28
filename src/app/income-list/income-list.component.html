@@ -1,20 +1,28 @@
 <div>
-  <table>
+  <table id="tables">
     <tr>
       <th>Name</th>
       <th>Price</th>
       <th>Date</th>
+      <th>Remove</th>
     </tr>
     <tbody>
       <tr *ngFor="let item of items">
         <td>{{ item.name }}</td>
         <td>{{ item.money }}</td>
         <td>{{ item.date }}</td>
+        <td>
+        <button class = "button btn-danger"(click)="deleteItem(item)">Remove</button>
+        </td>
       </tr>
     </tbody>
   </table>
 
   <button class="button blueButton" (click)="openIncomeModal()">Add income</button>
   <app-add-income-modal #incomeModal (incomeCreated)="getIncomeList()"></app-add-income-modal>
+
+  <ng-template appConfirmTemplate>
+    <app-confirm-modal></app-confirm-modal>
+  </ng-template>
 
 </div>

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
 import { AddIncomeModalComponent} from '../add-income-modal/add-income-modal.component';
+import {ConfirmService} from '../shared/confirm-service';
 
 @Component({
   selector: 'app-income-list',
@@ -13,7 +14,7 @@ export class IncomeListComponent implements OnInit {
 
   items: Item[];
 
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: ItemService, private confirmService: ConfirmService) { }
 
   ngOnInit() {
     this.getIncomeList();
@@ -28,6 +29,14 @@ export class IncomeListComponent implements OnInit {
         this.items = data;
       },
       error => console.log(error));
+  }
+
+  deleteItem(item) {
+    this.confirmService.confirm({ title: 'Confirm deletion', message: 'Do you really want to delete this Income: '
+        + 'Name: ' + item.name + ', Price: ' + item.money + ', Date: ' + item.date} ).then(
+      () => {
+        this.itemService.deleteItem(item);
+      });
   }
 
 }
