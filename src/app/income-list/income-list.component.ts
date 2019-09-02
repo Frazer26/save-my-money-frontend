@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
 import { AddIncomeModalComponent} from '../add-income-modal/add-income-modal.component';
-import {ConfirmService} from '../shared/confirm-service';
+import {ConfirmService} from '../confirmation/confirm-service';
 
 @Component({
   selector: 'app-income-list',
@@ -35,7 +35,10 @@ export class IncomeListComponent implements OnInit {
     this.confirmService.confirm({ title: 'Confirm deletion', message: 'Do you really want to delete this Income: '
         + 'Name: ' + item.name + ', Price: ' + item.money + ', Date: ' + item.date} ).then(
       () => {
-        this.itemService.deleteItem(item);
+        this.itemService.deleteItem(item).subscribe(data => {
+          this.getIncomeList();
+          console.log('success delete');
+        });
       });
   }
 

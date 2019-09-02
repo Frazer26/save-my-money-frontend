@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Item } from './item';
+import {Item} from './item';
 import {Observable} from 'rxjs';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -26,7 +26,11 @@ export class ItemService {
     return this.http.post<Item>(this.itemUrl + mainCategory, item, httpOptions);
   }
 
-  public deleteItem(item: Item) {
-    return this.http.delete(this.itemUrl + 'deleteItem/' + item.id);
+  public deleteItem(item: Item): Observable<Item[]> {
+    return this.http.delete<Item[]>(this.itemUrl + 'deleteItem/' + item.id);
+  }
+
+  public updateItem(item: Item) {
+    return this.http.put(this.itemUrl + 'updateItem/' + item.id, item, httpOptions);
   }
 }
