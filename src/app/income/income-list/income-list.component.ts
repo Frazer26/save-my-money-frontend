@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { Item } from '../item';
-import { ItemService } from '../item.service';
-import { AddIncomeModalComponent} from '../add-income-modal/add-income-modal.component';
-import {ConfirmService} from '../confirmation/confirm-service';
+import { Item } from '../../item';
+import { ItemService } from '../../item.service';
+import {ConfirmService} from '../../shared/confirmation/confirm-service';
 
 @Component({
   selector: 'app-income-list',
@@ -10,18 +9,12 @@ import {ConfirmService} from '../confirmation/confirm-service';
   styleUrls: ['./income-list.component.css']
 })
 export class IncomeListComponent implements OnInit {
-  @ViewChild('incomeModal', {static: false}) modal: AddIncomeModalComponent;
-
   items: Item[];
 
   constructor(private itemService: ItemService, private confirmService: ConfirmService) { }
 
   ngOnInit() {
     this.getIncomeList();
-  }
-
-  openIncomeModal() {
-    this.modal.open();
   }
 
   getIncomeList() {

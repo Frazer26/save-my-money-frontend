@@ -13,13 +13,15 @@
         <td>{{ item.date }}</td>
         <td>
         <button class = "button btn-danger"(click)="deleteItem(item)">Remove</button>
+        <button class = "button btn-dark" (click)="updateItem(item)">Edit</button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <button class="button blueButton" (click)="openIncomeModal()">Add income</button>
-  <app-add-income-modal #incomeModal (incomeCreated)="getIncomeList()"></app-add-income-modal>
+  <app-item-editor (incomeCreated)="getIncomeList()"></app-item-editor>
+  <!--<button class="button blueButton" (click)="openIncomeModal()">Add income</button>-->
+  <!--<app-add-update-income-modal #incomeModal (incomeCreated)="getIncomeList()"></app-add-update-income-modal>-->
 
   <ng-template appConfirmTemplate>
     <app-confirm-modal></app-confirm-modal>
