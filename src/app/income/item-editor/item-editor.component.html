@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="itemFormGroup">
+<form (ngSubmit)="onSubmit(itemFormGroup)" [formGroup]="itemFormGroup">
     <div class="form-group">
       <label for="itemName">Name</label>
       <div class="input-group">
@@ -30,6 +30,10 @@
     <button type="submit" class="btn btn-outline-success" [disabled]="!itemFormGroup.valid">Submit</button>
     <button type="button" class="btn btn-outline-secondary" (click)="d('cancel click')">Cancel</button>
   </div>
+
+  <pre>Item display: {{ itemFormGroup.getRawValue() | json }}</pre>
+  <pre>Item display: {{ newItem | json }}</pre>
+
 
 </form>
 

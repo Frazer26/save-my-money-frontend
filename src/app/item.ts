@@ -1,7 +1,7 @@
 import {SubCategory} from './sub-category';
 
 export class Item {
-  id: string;
+  id: number;
   name: string;
   money: number;
   date: Date;

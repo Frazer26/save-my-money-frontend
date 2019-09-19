@@ -30,7 +30,7 @@ export class ItemService {
     return this.http.delete<Item[]>(this.itemUrl + 'deleteItem/' + item.id);
   }
 
-  public updateItem(item: Item) {
-    return this.http.put(this.itemUrl + 'updateItem/' + item.id, item, httpOptions);
+  public updateItem(itemId: number, item: Item) {
+    return this.http.put(this.itemUrl + 'updateItem/' + itemId, item, httpOptions);
   }
 }

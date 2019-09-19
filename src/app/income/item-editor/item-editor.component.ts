@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Item} from '../../item';
 import {ItemService} from '../../item.service';
 import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
@@ -13,29 +13,50 @@ import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 export class ItemEditorComponent {
   @Output() incomeCreated = new EventEmitter<Item>();
 
-  itemFormGroup: FormGroup;
+  private itemFormGroup: FormGroup;
+  private itemId: null;
   private newItem: Item = new Item();
 
   constructor(private fb: FormBuilder, private itemService: ItemService) {
     this.itemFormGroup = this.fb.group({
-      name: new FormControl(''),
-      money: new FormControl(''),
-      date: new FormControl('')
+      name: new FormControl('', Validators.required),
+      money: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required)
     });
   }
 
-  onSubmit() {
-    this.newItem = this.itemFormGroup.getRawValue();
-    this.itemService
-      .addItemUnderMainCategory('INCOME', this.newItem)
-      .subscribe(
-        data => {
-          console.log('success!', data);
-          this.incomeCreated.emit(data);
-          this.itemFormGroup.reset();
-        },
-        error => console.error('could not post because', error)
-      );
+  onSubmit(itemFormGroup) {
+    this.newItem = itemFormGroup.getRawValue();
+    if (this.itemId != null) {
+      this.itemService.updateItem(this.itemId, this.newItem)
+      // nem működik még az update rendesen (Main category null ezért nem jeleníti meg editálás után KITÖLTENI UI-on), de post igen
+        .subscribe(
+          data => {
+            console.log('success!', data);
+          },
+          error => console.error('could not update because', error)
+        );
+    } else {
+      this.itemService
+        .addItemUnderMainCategory('INCOME', this.newItem)
+        .subscribe(
+          data => {
+            console.log('success!', data);
+            this.incomeCreated.emit(data);
+          },
+          error => console.error('could not post because', error)
+        );
+    }
+    this.itemFormGroup.reset();
+  }
+
+  setUpItemFormGroup(item) {
+    this.itemId = item.id;
+    this.itemFormGroup.setValue({
+      name: item.name,
+      money: item.money,
+      date: new Date(item.date)
+    });
   }
 
 }

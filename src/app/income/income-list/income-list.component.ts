@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { Item } from '../../item';
-import { ItemService } from '../../item.service';
+import {Item} from '../../item';
+import {ItemService} from '../../item.service';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
+import {ItemEditorComponent} from '../item-editor/item-editor.component';
 
 @Component({
   selector: 'app-income-list',
@@ -9,9 +10,13 @@ import {ConfirmService} from '../../shared/confirmation/confirm-service';
   styleUrls: ['./income-list.component.css']
 })
 export class IncomeListComponent implements OnInit {
+  @ViewChild(ItemEditorComponent, {static: false})
+  itemEditor: ItemEditorComponent;
+
   items: Item[];
 
-  constructor(private itemService: ItemService, private confirmService: ConfirmService) { }
+  constructor(private itemService: ItemService, private confirmService: ConfirmService) {
+  }
 
   ngOnInit() {
     this.getIncomeList();
@@ -25,14 +30,20 @@ export class IncomeListComponent implements OnInit {
   }
 
   deleteItem(item) {
-    this.confirmService.confirm({ title: 'Confirm deletion', message: 'Do you really want to delete this Income: '
-        + 'Name: ' + item.name + ', Price: ' + item.money + ', Date: ' + item.date} ).then(
+    this.confirmService.confirm({
+      title: 'Confirm deletion', message: 'Do you really want to delete this Income: '
+        + 'Name: ' + item.name + ', Price: ' + item.money + ', Date: ' + item.date
+    }).then(
       () => {
         this.itemService.deleteItem(item).subscribe(data => {
           this.getIncomeList();
           console.log('success delete');
         });
       });
+  }
+
+  editItem(item) {
+    this.itemEditor.setUpItemFormGroup(item);
   }
 
 }
