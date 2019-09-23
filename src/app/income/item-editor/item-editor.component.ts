@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Item} from '../../item';
 import {ItemService} from '../../item.service';
 import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {AppSettings} from '../../shared/app-settings';
 
 @Component({
   selector: 'app-item-editor',
@@ -14,8 +15,8 @@ export class ItemEditorComponent {
   @Output() incomeCreated = new EventEmitter<Item>();
 
   private itemFormGroup: FormGroup;
-  private itemId: null;
-  private newItem: Item = new Item();
+  private itemFromTable: Item = new Item();
+  private editedItem: Item;
 
   constructor(private fb: FormBuilder, private itemService: ItemService) {
     this.itemFormGroup = this.fb.group({
@@ -26,19 +27,23 @@ export class ItemEditorComponent {
   }
 
   onSubmit(itemFormGroup) {
-    this.newItem = itemFormGroup.getRawValue();
-    if (this.itemId != null) {
-      this.itemService.updateItem(this.itemId, this.newItem)
-      // nem működik még az update rendesen (Main category null ezért nem jeleníti meg editálás után KITÖLTENI UI-on), de post igen
+    if (this.itemFromTable.id != null) {
+      this.editedItem =
+        this.fillItem(this.itemFromTable, itemFormGroup.getRawValue().name,
+          itemFormGroup.getRawValue().money, itemFormGroup.getRawValue().date);
+
+      this.itemService.updateItem(this.itemFromTable.id, this.editedItem) // valamiért a dátum -1 napot jelenít meg (backend vagy front)?
         .subscribe(
           data => {
             console.log('success!', data);
           },
           error => console.error('could not update because', error)
         );
+      this.itemFromTable.id = null;
+
     } else {
       this.itemService
-        .addItemUnderMainCategory('INCOME', this.newItem)
+        .addItemUnderMainCategory(AppSettings.INCOME, itemFormGroup.getRawValue())
         .subscribe(
           data => {
             console.log('success!', data);
@@ -50,13 +55,22 @@ export class ItemEditorComponent {
     this.itemFormGroup.reset();
   }
 
-  setUpItemFormGroup(item) {
-    this.itemId = item.id;
+  setUpFormWithItemValues(item) {
+    this.itemFromTable = item;
     this.itemFormGroup.setValue({
       name: item.name,
       money: item.money,
       date: new Date(item.date)
     });
+  }
+
+  fillItem(itemFormTable, formItemName, formItemMoney, formItemDate): Item {
+    let item;
+    item = itemFormTable;
+    item.name = formItemName;
+    item.money = formItemMoney;
+    item.date = formItemDate;
+    return item;
   }
 
 }

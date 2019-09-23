@@ -43,7 +43,7 @@ export class IncomeListComponent implements OnInit {
   }
 
   editItem(item) {
-    this.itemEditor.setUpItemFormGroup(item);
+    this.itemEditor.setUpFormWithItemValues(item);
   }
 
 }

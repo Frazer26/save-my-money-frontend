@@ -31,8 +31,9 @@
     <button type="button" class="btn btn-outline-secondary" (click)="d('cancel click')">Cancel</button>
   </div>
 
-  <pre>Item display: {{ itemFormGroup.getRawValue() | json }}</pre>
-  <pre>Item display: {{ newItem | json }}</pre>
+  <pre>FormGroup Item: {{ itemFormGroup.getRawValue() | json }}</pre>
+  <pre>ItemFromTable: {{ itemFromTable | json }}</pre>
+  <pre>EditedItem: {{ editedItem | json }}</pre>
 
 
 </form>
