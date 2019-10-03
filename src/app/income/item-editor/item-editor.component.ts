@@ -19,11 +19,7 @@ export class ItemEditorComponent {
   private editedItem: Item;
 
   constructor(private fb: FormBuilder, private itemService: ItemService) {
-    this.itemFormGroup = this.fb.group({
-      name: new FormControl('', Validators.required),
-      money: new FormControl('', Validators.required),
-      date: new FormControl('', Validators.required)
-    });
+    this.clearForm();
   }
 
   onSubmit(itemFormGroup) {
@@ -71,6 +67,14 @@ export class ItemEditorComponent {
     item.money = formItemMoney;
     item.date = formItemDate;
     return item;
+  }
+
+  clearForm() {
+    this.itemFormGroup = this.fb.group({
+      name: new FormControl('', Validators.required),
+      money: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required)
+    });
   }
 
 }
