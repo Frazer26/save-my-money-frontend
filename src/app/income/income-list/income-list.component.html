@@ -8,23 +8,34 @@
       <th>Edit</th>
     </tr>
     <tbody>
-      <tr *ngFor="let item of items; let i = index">
-        <td>{{ item.name }}</td>
-        <td>{{ item.money }}</td>
-        <td>{{ item.date }}</td>
-        <td>
-        <button class = "button btn-danger"(click)="deleteItem(item)">Remove</button>
-        </td>
-        <td>
-        <button class = "button btn-dark" (click)="editItem(item)">Edit</button>
-        </td>
-      </tr>
+    <tr *ngFor="let item of items; let i = index">
+      <td>{{ item.name }}</td>
+      <td>{{ item.money }}</td>
+      <td>{{ item.date }}</td>
+      <td>
+        <button class="button btn-danger" (click)="deleteItem(item)">Remove</button>
+      </td>
+      <td>
+        <button class="button btn-dark" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm"
+                (click)="isCollapsed = !isCollapsed; editItem(item); clicked = true;" [disabled]="clicked">Edit</button>
+      </td>
+    </tr>
     </tbody>
   </table>
 
-  <app-item-editor (incomeCreated)="getIncomeList()"></app-item-editor>
-  <!--<button class="button blueButton" (click)="openIncomeModal()">Add income</button>-->
-  <!--<app-add-update-income-modal #incomeModal (incomeCreated)="getIncomeList()"></app-add-update-income-modal>-->
+<div id="div_under_the_table">
+  <button class="button blueButton" (click)="isCollapsed = !isCollapsed; clicked = true;"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm" [disabled]="clicked">Add income
+  </button>
+</div>
+
+  <div id="collapseForm" [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <app-item-editor (incomeCreated)="getIncomeList()"></app-item-editor>
+      </div>
+    </div>
+  </div>
 
   <ng-template appConfirmTemplate>
     <app-confirm-modal></app-confirm-modal>

@@ -13,9 +13,13 @@ export class IncomeListComponent implements OnInit {
   @ViewChild(ItemEditorComponent, {static: false})
   itemEditor: ItemEditorComponent;
 
+  isCollapsed: boolean;
+  clicked: boolean;
   items: Item[];
 
   constructor(private itemService: ItemService, private confirmService: ConfirmService) {
+    this.isCollapsed = true;
+    this.clicked = false;
   }
 
   ngOnInit() {
