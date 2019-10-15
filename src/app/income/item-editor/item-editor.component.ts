@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Item} from '../../item';
 import {ItemService} from '../../item.service';
@@ -13,6 +13,8 @@ import {AppSettings} from '../../shared/app-settings';
 })
 export class ItemEditorComponent {
   @Output() incomeCreated = new EventEmitter<Item>();
+  @Output() collapse = new EventEmitter();
+  @Output() enabledButtons = new EventEmitter();
 
   private itemFormGroup: FormGroup;
   private itemFromTable: Item = new Item();
@@ -75,6 +77,8 @@ export class ItemEditorComponent {
       money: new FormControl('', Validators.required),
       date: new FormControl('', Validators.required)
     });
+    this.collapse.emit(true);
+    this.enabledButtons.emit(false);
   }
 
 }

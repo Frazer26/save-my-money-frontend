@@ -32,7 +32,8 @@
   <div id="collapseForm" [ngbCollapse]="isCollapsed">
     <div class="card">
       <div class="card-body">
-        <app-item-editor (incomeCreated)="getIncomeList()"></app-item-editor>
+        <app-item-editor (incomeCreated)="getIncomeList()" (collapse)="isCollapsed=$event"
+                         (enabledButtons)="clicked=$event"></app-item-editor>
       </div>
     </div>
   </div>
