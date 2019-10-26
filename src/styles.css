@@ -123,12 +123,11 @@ label {
 
 app-top-bar {
   width: 100%;
-  height: 68px;
   background-color: #1976d2;
-  padding: 32px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 app-top-bar div {
@@ -172,12 +171,10 @@ app-income-list table th {
   margin-bottom: 90px;
 }
 
-/*#collapseForm{*/
-  /*position: relative;*/
-  /*top: 90px;*/
-  /*height: 100%;*/
-  /*width: 100%;*/
-/*}*/
+/* calender css  */
+.datepicker-without-month .ngb-dp-months {
+  display: none !important;
+}
 
 /*
 Copyright Google LLC. All Rights Reserved.

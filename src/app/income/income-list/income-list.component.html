@@ -17,17 +17,18 @@
       </td>
       <td>
         <button class="button btn-dark" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm"
-                (click)="isCollapsed = !isCollapsed; editItem(item); clicked = true;" [disabled]="clicked">Edit</button>
+                (click)="isCollapsed = !isCollapsed; editItem(item); clicked = true;" [disabled]="clicked">Edit
+        </button>
       </td>
     </tr>
     </tbody>
   </table>
 
-<div id="div_under_the_table">
-  <button class="button blueButton" (click)="isCollapsed = !isCollapsed; clicked = true;"
-          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm" [disabled]="clicked">Add income
-  </button>
-</div>
+  <div id="div_under_the_table">
+    <button class="button blueButton" (click)="isCollapsed = !isCollapsed; clicked = true;"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm" [disabled]="clicked">Add income
+    </button>
+  </div>
 
   <div id="collapseForm" [ngbCollapse]="isCollapsed">
     <div class="card">
