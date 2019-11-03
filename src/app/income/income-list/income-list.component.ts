@@ -3,6 +3,7 @@ import {Item} from '../../item';
 import {ItemService} from '../../item.service';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
 import {ItemEditorComponent} from '../item-editor/item-editor.component';
+import {TopBarComponent} from '../../top-bar/top-bar.component';
 
 @Component({
   selector: 'app-income-list',
@@ -16,21 +17,36 @@ export class IncomeListComponent implements OnInit {
   isCollapsed: boolean;
   clicked: boolean;
   items: Item[];
+  filterDataByDate: Item[];
 
-  constructor(private itemService: ItemService, private confirmService: ConfirmService) {
+  constructor(private itemService: ItemService, private confirmService: ConfirmService,
+              private topBarComponent: TopBarComponent) {
     this.isCollapsed = true;
     this.clicked = false;
   }
 
   ngOnInit() {
-    this.getIncomeList();
+    this.getIncomeListByDate();
   }
 
-  getIncomeList() {
-    this.itemService.findAll('INCOME').subscribe(data => {
-        this.items = data;
-      },
-      error => console.log(error));
+  getIncomeListByDate() {
+    this.getIncomeList().then(r =>
+      this.searchByDate(this.topBarComponent.getSelectedDate)
+    );
+  }
+
+  async getIncomeList() {
+    this.items = await this.itemService.findAll('INCOME');
+  }
+
+  searchByDate(selectedDate: string) {
+    if (!selectedDate) {
+      this.filterDataByDate = this.items;
+    } else {
+      this.filterDataByDate = this.items.filter(x =>
+        x.date.toString().includes(selectedDate)
+      );
+    }
   }
 
   deleteItem(item) {

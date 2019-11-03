@@ -18,8 +18,8 @@ export class ItemService {
     this.itemUrl = 'http://localhost:8080/budget/';
   }
 
-  public findAll(mainCategory: string): Observable<Item[]> {
-    return this.http.get<Item[]>(this.itemUrl + mainCategory);
+  public findAll(mainCategory: string): Promise<Item[]> {
+    return this.http.get<Item[]>(this.itemUrl + mainCategory).toPromise();
   }
 
   public addItemUnderMainCategory(mainCategory: string, item: Item) {

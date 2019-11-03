@@ -31,7 +31,7 @@ import { ItemEditorComponent } from './income/item-editor/item-editor.component'
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [ItemService, ConfirmService, ConfirmState],
+  providers: [ItemService, ConfirmService, ConfirmState, TopBarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
