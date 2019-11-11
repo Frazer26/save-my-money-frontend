@@ -14,6 +14,8 @@ import {ConfirmTemplateDirective} from './shared/confirmation/confirm-template.d
 import {ConfirmService} from './shared/confirmation/confirm-service';
 import {ConfirmState} from './shared/confirmation/confirm-state';
 import { ItemEditorComponent } from './income/item-editor/item-editor.component';
+import { DatepickerRangeComponent } from './shared/datepicker-range/datepicker-range.component';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { ItemEditorComponent } from './income/item-editor/item-editor.component'
     ConfirmModalComponent,
     ConfirmTemplateDirective,
     ItemEditorComponent,
+    DatepickerRangeComponent,
   ],
   imports: [
     NgbModule,
@@ -31,7 +34,7 @@ import { ItemEditorComponent } from './income/item-editor/item-editor.component'
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [ItemService, ConfirmService, ConfirmState, TopBarComponent],
+  providers: [ItemService, ConfirmService, ConfirmState, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

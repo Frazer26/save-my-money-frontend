@@ -1,4 +1,5 @@
 <div>
+  <app-datepicker-range></app-datepicker-range>
   <table id="tables">
     <tr>
       <th>Name</th>
@@ -8,7 +9,7 @@
       <th>Edit</th>
     </tr>
     <tbody>
-    <tr *ngFor="let item of filterDataByDate; let i = index">
+    <tr *ngFor="let item of items; let i = index">
       <td>{{ item.name }}</td>
       <td>{{ item.money }}</td>
       <td>{{ item.date }}</td>

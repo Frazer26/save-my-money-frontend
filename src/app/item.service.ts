@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Item} from './item';
 import {Observable} from 'rxjs';
 
@@ -18,8 +18,12 @@ export class ItemService {
     this.itemUrl = 'http://localhost:8080/budget/';
   }
 
-  public findAll(mainCategory: string): Promise<Item[]> {
-    return this.http.get<Item[]>(this.itemUrl + mainCategory).toPromise();
+  public getItemsBetweenDates(mainCategory: string, startDate, endDate): Observable<Item[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.http.get<Item[]>(this.itemUrl + mainCategory, {params});
   }
 
   public addItemUnderMainCategory(mainCategory: string, item: Item) {

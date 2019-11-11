@@ -171,11 +171,6 @@ app-income-list table th {
   margin-bottom: 90px;
 }
 
-/* calender css  */
-.datepicker-without-month .ngb-dp-months {
-  display: none !important;
-}
-
 /*
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

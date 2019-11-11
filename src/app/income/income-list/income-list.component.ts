@@ -3,12 +3,12 @@ import {Item} from '../../item';
 import {ItemService} from '../../item.service';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
 import {ItemEditorComponent} from '../item-editor/item-editor.component';
-import {TopBarComponent} from '../../top-bar/top-bar.component';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-income-list',
   templateUrl: './income-list.component.html',
-  styleUrls: ['./income-list.component.css']
+  styleUrls: ['./income-list.component.css'],
 })
 export class IncomeListComponent implements OnInit {
   @ViewChild(ItemEditorComponent, {static: false})
@@ -17,36 +17,24 @@ export class IncomeListComponent implements OnInit {
   isCollapsed: boolean;
   clicked: boolean;
   items: Item[];
-  filterDataByDate: Item[];
 
-  constructor(private itemService: ItemService, private confirmService: ConfirmService,
-              private topBarComponent: TopBarComponent) {
+  constructor(private itemService: ItemService, private confirmService: ConfirmService, private datePipe: DatePipe) {
     this.isCollapsed = true;
     this.clicked = false;
   }
 
   ngOnInit() {
-    this.getIncomeListByDate();
+    this.getIncomeList();
   }
 
-  getIncomeListByDate() {
-    this.getIncomeList().then(r =>
-      this.searchByDate(this.topBarComponent.getSelectedDate)
-    );
-  }
-
-  async getIncomeList() {
-    this.items = await this.itemService.findAll('INCOME');
-  }
-
-  searchByDate(selectedDate: string) {
-    if (!selectedDate) {
-      this.filterDataByDate = this.items;
-    } else {
-      this.filterDataByDate = this.items.filter(x =>
-        x.date.toString().includes(selectedDate)
-      );
-    }
+  getIncomeList() {
+    this.itemService.getItemsBetweenDates('INCOME',
+      this.datePipe.transform(new Date(2019, 0, 1), 'yyyy-MM-dd'),
+      this.datePipe.transform(new Date(2019, 12, 1), 'yyyy-MM-dd'),
+    ).subscribe(data => {
+        this.items = data;
+      },
+      error => console.log(error));
   }
 
   deleteItem(item) {
