@@ -1,36 +1,38 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {Item} from '../../item';
 import {ItemService} from '../../item.service';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
 import {ItemEditorComponent} from '../item-editor/item-editor.component';
-import {DatePipe} from '@angular/common';
+import {DatepickerRangeComponent} from '../../shared/datepicker-range/datepicker-range.component';
 
 @Component({
   selector: 'app-income-list',
   templateUrl: './income-list.component.html',
   styleUrls: ['./income-list.component.css'],
 })
-export class IncomeListComponent implements OnInit {
-  @ViewChild(ItemEditorComponent, {static: false})
-  itemEditor: ItemEditorComponent;
+export class IncomeListComponent implements AfterViewInit {
+  @ViewChild(ItemEditorComponent, {static: false}) itemEditor: ItemEditorComponent;
+
+  @ViewChild(DatepickerRangeComponent, {static: false}) datepickerRange;
+
 
   isCollapsed: boolean;
   clicked: boolean;
   items: Item[];
 
-  constructor(private itemService: ItemService, private confirmService: ConfirmService, private datePipe: DatePipe) {
+  constructor(private itemService: ItemService, private confirmService: ConfirmService) {
     this.isCollapsed = true;
     this.clicked = false;
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.getIncomeList();
   }
 
   getIncomeList() {
     this.itemService.getItemsBetweenDates('INCOME',
-      this.datePipe.transform(new Date(2019, 0, 1), 'yyyy-MM-dd'),
-      this.datePipe.transform(new Date(2019, 12, 1), 'yyyy-MM-dd'),
+      this.datepickerRange.formatNgbDateToISO8601(this.datepickerRange.fromDate),
+      this.datepickerRange.formatNgbDateToISO8601(this.datepickerRange.toDate),
     ).subscribe(data => {
         this.items = data;
       },

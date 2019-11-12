@@ -15,7 +15,6 @@ import {ConfirmService} from './shared/confirmation/confirm-service';
 import {ConfirmState} from './shared/confirmation/confirm-state';
 import { ItemEditorComponent } from './income/item-editor/item-editor.component';
 import { DatepickerRangeComponent } from './shared/datepicker-range/datepicker-range.component';
-import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,7 @@ import {DatePipe} from '@angular/common';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [ItemService, ConfirmService, ConfirmState, DatePipe],
+  providers: [ItemService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })
 export class AppModule {

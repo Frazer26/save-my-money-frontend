@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-datepicker-range',
@@ -31,7 +33,7 @@ export class DatepickerRangeComponent {
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  constructor(calendar: NgbCalendar) {
+  constructor(calendar: NgbCalendar, private ngbDateParserFormatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
@@ -60,4 +62,7 @@ export class DatepickerRangeComponent {
     return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
 
+  formatNgbDateToISO8601(date: NgbDate): string {
+    return this.ngbDateParserFormatter.format(date);
+  }
 }
