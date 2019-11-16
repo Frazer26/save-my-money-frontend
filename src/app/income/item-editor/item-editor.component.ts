@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Item} from '../../item';
 import {ItemService} from '../../item.service';
@@ -18,7 +18,6 @@ export class ItemEditorComponent {
 
   private itemFormGroup: FormGroup;
   private itemFromTable: Item = new Item();
-  private editedItem: Item;
 
   constructor(private fb: FormBuilder, private itemService: ItemService) {
     this.clearForm();
@@ -26,31 +25,40 @@ export class ItemEditorComponent {
 
   onSubmit(itemFormGroup) {
     if (this.itemFromTable.id != null) {
-      this.editedItem =
-        this.fillItem(this.itemFromTable, itemFormGroup.getRawValue().name,
-          itemFormGroup.getRawValue().money, itemFormGroup.getRawValue().date);
-
-      this.itemService.updateItem(this.itemFromTable.id, this.editedItem) // valamiért a dátum -1 napot jelenít meg (backend vagy front)?
-        .subscribe(
-          data => {
-            console.log('success!', data);
-          },
-          error => console.error('could not update because', error)
-        );
-      this.itemFromTable.id = null;
+      this.editItem(this.itemFromTable, this.itemFromTable.id, itemFormGroup);
 
     } else {
-      this.itemService
-        .addItemUnderMainCategory(AppSettings.INCOME, itemFormGroup.getRawValue())
-        .subscribe(
-          data => {
-            console.log('success!', data);
-            this.incomeCreated.emit(data);
-          },
-          error => console.error('could not post because', error)
-        );
+      this.postItemUnderMainCategory(AppSettings.INCOME, itemFormGroup);
     }
     this.itemFormGroup.reset();
+  }
+
+  private editItem(item: Item, itemId: number, itemFormGroup) {
+    let editedItem: Item;
+    editedItem =
+      this.fillItem(item, itemFormGroup.getRawValue().name,
+        itemFormGroup.getRawValue().money, itemFormGroup.getRawValue().date);
+
+    this.itemService.updateItem(itemId, editedItem)
+      .subscribe(
+        data => {
+          console.log('success!', data);
+        },
+        error => console.error('could not update because', error)
+      );
+    itemId = null;
+  }
+
+  private postItemUnderMainCategory(mainCategory: string, itemFormGroup) {
+    this.itemService
+      .addItemUnderMainCategory(mainCategory, itemFormGroup.getRawValue())
+      .subscribe(
+        data => {
+          console.log('success!', data);
+          this.incomeCreated.emit(data);
+        },
+        error => console.error('could not post because', error)
+      );
   }
 
   setUpFormWithItemValues(item) {
@@ -63,7 +71,7 @@ export class ItemEditorComponent {
   }
 
   fillItem(itemFormTable, formItemName, formItemMoney, formItemDate): Item {
-    let item;
+    let item: Item;
     item = itemFormTable;
     item.name = formItemName;
     item.money = formItemMoney;
