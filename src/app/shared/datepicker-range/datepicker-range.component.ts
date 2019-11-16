@@ -1,32 +1,35 @@
-import {Component} from '@angular/core';
-import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
-import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {NgbCalendar, NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'app-datepicker-range',
   templateUrl: './datepicker-range.component.html',
   styles: [`
-    .custom-day {
-      text-align: center;
-      padding: 0.185rem 0.25rem;
-      display: inline-block;
-      height: 2rem;
-      width: 2rem;
-    }
-    .custom-day.focused {
-      background-color: #e6e6e6;
-    }
-    .custom-day.range, .custom-day:hover {
-      background-color: rgb(2, 117, 216);
-      color: white;
-    }
-    .custom-day.faded {
-      background-color: rgba(2, 117, 216, 0.5);
-    }
+      .custom-day {
+          text-align: center;
+          padding: 0.185rem 0.25rem;
+          display: inline-block;
+          height: 2rem;
+          width: 2rem;
+      }
+
+      .custom-day.focused {
+          background-color: #e6e6e6;
+      }
+
+      .custom-day.range, .custom-day:hover {
+          background-color: rgb(2, 117, 216);
+          color: white;
+      }
+
+      .custom-day.faded {
+          background-color: rgba(2, 117, 216, 0.5);
+      }
   `]
 })
 export class DatepickerRangeComponent {
+  @Output() selectedDateRange = new EventEmitter();
 
   hoveredDate: NgbDate;
 
@@ -44,6 +47,7 @@ export class DatepickerRangeComponent {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
+      this.selectedDateRange.emit(true);
     } else {
       this.toDate = null;
       this.fromDate = date;
