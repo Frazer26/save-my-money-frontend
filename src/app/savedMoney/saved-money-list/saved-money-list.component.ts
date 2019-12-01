@@ -7,7 +7,7 @@ import {ItemEditorForSavedMoneyComponent} from '../item-editor-for-saved-money/i
 import {AppSettings} from '../../shared/app-settings';
 
 @Component({
-  selector: 'app-saved-money-list',
+  selector: 'app-table-list',
   templateUrl: './saved-money-list.component.html',
   styleUrls: ['./saved-money-list.component.css']
 })

@@ -6,7 +6,7 @@ import {ItemEditorComponent} from '../item-editor/item-editor.component';
 import {DatepickerRangeComponent} from '../../shared/datepicker-range/datepicker-range.component';
 
 @Component({
-  selector: 'app-income-list',
+  selector: 'app-table-list',
   templateUrl: './income-list.component.html',
   styleUrls: ['./income-list.component.css'],
 })

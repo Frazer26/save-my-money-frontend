@@ -142,25 +142,25 @@ app-top-bar a {
 }
 
 /* Table */
-app-income-list {
+app-table-list {
   width: 100%;
   padding: 25px;
 }
 
-app-income-list table {
+app-table-list table {
   border-collapse: collapse;
   width: 100%;
 }
 
-app-income-list table td,  app-income-list table th{
+app-table-list table td,  app-table-list table th{
   border: 1px solid #ddd;
   padding: 8px;
 }
-app-income-list table tr:nth-child(even){background-color: #f2f2f2;}
+app-table-list table tr:nth-child(even){background-color: #f2f2f2;}
 
-app-income-list table tr:hover {background-color: #ddd;}
+app-table-list table tr:hover {background-color: #ddd;}
 
-app-income-list table th {
+app-table-list table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
