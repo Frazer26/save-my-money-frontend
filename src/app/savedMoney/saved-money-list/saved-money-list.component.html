@@ -1,0 +1,47 @@
+<div>
+  <app-datepicker-range (selectedDateRange)="getSavedMoneyList()"></app-datepicker-range>
+  <table id="tables">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Date</th>
+      <th>Remove</th>
+      <th>Edit</th>
+    </tr>
+    <tbody>
+    <tr *ngFor="let item of itemsUnderSavedMoney">
+      <td>{{ item.name }}</td>
+      <td>{{ item.money }}</td>
+      <td>{{ item.date }}</td>
+      <td>
+        <button class="button btn-danger" (click)="deleteItemFromSavedMoney(item)">Remove</button>
+      </td>
+      <td>
+        <button class="button btn-dark" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm"
+                (click)="isCollapsed = !isCollapsed; editItem(item); clicked = true;" [disabled]="clicked">Edit
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div id="div_under_the_table">
+    <button class="button blueButton" (click)="isCollapsed = !isCollapsed; clicked = true;"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm" [disabled]="clicked">Add Save Money
+    </button>
+  </div>
+
+  <div id="collapseForm" [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <app-item-editor-for-saved-money (saveMoneyCreated)="getSavedMoneyList()" (collapse)="isCollapsed=$event"
+                         (enabledButtons)="clicked=$event"></app-item-editor-for-saved-money>
+      </div>
+    </div>
+  </div>
+
+  <ng-template appConfirmTemplate>
+    <app-confirm-modal></app-confirm-modal>
+  </ng-template>
+
+</div>

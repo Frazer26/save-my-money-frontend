@@ -15,6 +15,8 @@ import {ConfirmService} from './shared/confirmation/confirm-service';
 import {ConfirmState} from './shared/confirmation/confirm-state';
 import { ItemEditorComponent } from './income/item-editor/item-editor.component';
 import { DatepickerRangeComponent } from './shared/datepicker-range/datepicker-range.component';
+import { SavedMoneyListComponent } from './savedMoney/saved-money-list/saved-money-list.component';
+import { ItemEditorForSavedMoneyComponent } from './savedMoney/item-editor-for-saved-money/item-editor-for-saved-money.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { DatepickerRangeComponent } from './shared/datepicker-range/datepicker-r
     ConfirmTemplateDirective,
     ItemEditorComponent,
     DatepickerRangeComponent,
+    SavedMoneyListComponent,
+    ItemEditorForSavedMoneyComponent,
   ],
   imports: [
     NgbModule,

@@ -6,13 +6,13 @@ import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import {AppSettings} from '../../shared/app-settings';
 
 @Component({
-  selector: 'app-item-editor',
-  templateUrl: './item-editor.component.html',
-  styleUrls: ['./item-editor.component.css'],
+  selector: 'app-item-editor-for-saved-money',
+  templateUrl: './item-editor-for-saved-money.component.html',
+  styleUrls: ['./item-editor-for-saved-money.component.css'],
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
-export class ItemEditorComponent {
-  @Output() incomeCreated = new EventEmitter<Item>();
+export class ItemEditorForSavedMoneyComponent {
+  @Output() saveMoneyCreated = new EventEmitter<Item>();
   @Output() collapse = new EventEmitter();
   @Output() enabledButtons = new EventEmitter();
 
@@ -23,12 +23,11 @@ export class ItemEditorComponent {
     this.clearForm();
   }
 
-  onSubmit(itemFormGroup) {
+  onSubmitSavedMoney(itemFormGroup) {
     if (this.itemFromTable.id != null) {
       this.editItem(this.itemFromTable, this.itemFromTable.id, itemFormGroup);
-
     } else {
-      this.postItemUnderMainCategory(AppSettings.INCOME, itemFormGroup);
+      this.postItemUnderSavedMoney(AppSettings.SAVED_MONEY, itemFormGroup);
     }
     this.itemFormGroup.reset();
   }
@@ -49,13 +48,13 @@ export class ItemEditorComponent {
     itemId = null;
   }
 
-  private postItemUnderMainCategory(mainCategory: string, itemFormGroup) {
+  private postItemUnderSavedMoney(mainCategory: string, itemFormGroup) {
     this.itemService
       .addItemUnderMainCategory(mainCategory, itemFormGroup.getRawValue())
       .subscribe(
         data => {
           console.log('success!', data);
-          this.incomeCreated.emit(data);
+          this.saveMoneyCreated.emit(data);
         },
         error => console.error('could not post because', error)
       );
