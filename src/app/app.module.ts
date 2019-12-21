@@ -17,6 +17,8 @@ import { ItemEditorComponent } from './income/item-editor/item-editor.component'
 import { DatepickerRangeComponent } from './shared/datepicker-range/datepicker-range.component';
 import { SavedMoneyListComponent } from './savedMoney/saved-money-list/saved-money-list.component';
 import { ItemEditorForSavedMoneyComponent } from './savedMoney/item-editor-for-saved-money/item-editor-for-saved-money.component';
+import { CostSubCategoryListComponent } from './Cost/cost-sub-category-list/cost-sub-category-list.component';
+import {SubCategoryService} from './sub-category.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { ItemEditorForSavedMoneyComponent } from './savedMoney/item-editor-for-s
     DatepickerRangeComponent,
     SavedMoneyListComponent,
     ItemEditorForSavedMoneyComponent,
+    CostSubCategoryListComponent,
   ],
   imports: [
     NgbModule,
@@ -37,7 +40,7 @@ import { ItemEditorForSavedMoneyComponent } from './savedMoney/item-editor-for-s
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [ItemService, ConfirmService, ConfirmState],
+  providers: [ItemService, SubCategoryService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })
 export class AppModule {

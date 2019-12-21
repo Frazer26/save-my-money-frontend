@@ -1,0 +1,41 @@
+<div>
+<!--  <app-datepicker-range (selectedDateRange)="getCostSubCategories()"></app-datepicker-range>-->
+  <table id="tables">
+    <tr>
+      <th>Name</th>
+<!--      <th>Price</th>-->
+      <th>Remove</th>
+      <th>Edit</th>
+    </tr>
+    <tbody>
+    <tr *ngFor="let subCategory of subcategories">
+      <td>{{ subCategory.name }}</td>
+      <button class="btn" (click)="deleteSubCategory(subCategory)"><i class="fa fa-trash"></i></button>
+
+      <td>
+<!--        <button class="button btn-dark" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm"-->
+<!--                (click)="isCollapsed = !isCollapsed; editItem(subCategory); clicked = true;" [disabled]="clicked">Edit-->
+<!--        </button>-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div id="div_under_the_table">
+    <button class="button blueButton">Add SubCategory</button>
+  </div>
+
+<!--  <div id="collapseForm" [ngbCollapse]="isCollapsed">-->
+<!--    <div class="card">-->
+<!--      <div class="card-body">-->
+<!--        <app-item-editor-for-saved-money (saveMoneyCreated)="getSavedMoneyList()" (collapse)="isCollapsed=$event"-->
+<!--                                         (enabledButtons)="clicked=$event"></app-item-editor-for-saved-money>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <ng-template appConfirmTemplate>
+    <app-confirm-modal></app-confirm-modal>
+  </ng-template>
+
+</div>
