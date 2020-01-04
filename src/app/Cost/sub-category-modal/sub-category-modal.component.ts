@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-boo
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SubCategoryService} from '../../sub-category.service';
 
-// For post and update
+// For post
 @Component({
   template: `
       <div class="modal-header">
@@ -16,17 +16,17 @@ import {SubCategoryService} from '../../sub-category.service';
           <div class="modal-boy">
               <div class="container">
                   <div class="form-group">
-                      <label for="subCategoryName">SubCategory name:</label>
+                      <label for="name">SubCategory name:</label>
                       <input type="text"
                              class="form-control"
-                             formControlName="subCategoryName"/>
+                             formControlName="name"/>
                   </div>
               </div>
           </div>
           <div class="modal-footer">
               <button class="btn btn-success"
                       [disabled]="!subcategoryPostForm.valid">
-                  Submit Form
+                  Add SubCategory
               </button>
           </div>
 
@@ -51,7 +51,7 @@ export class SubCategoryModalComponent {
 
   private createForm() {
     this.subcategoryPostForm = this.formBuilder.group({
-      subCategoryName: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
     });
   }
 
@@ -63,6 +63,7 @@ export class SubCategoryModalComponent {
         },
         error => console.error('could not add new subcategory because', error)
       );
+    this.activeModal.dismiss();
   }
 
 }
