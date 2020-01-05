@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModalOptions, NgbModalRef, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {NgbActiveModal, NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SubCategoryService} from '../../sub-category.service';
+import {SubCategory} from '../../sub-category';
 
 @Component({
   selector: 'app-sub-category-post-modal-content',
@@ -13,14 +14,12 @@ import {SubCategoryService} from '../../sub-category.service';
           </button>
       </div>
       <form (ngSubmit)="submitForm(subcategoryPostForm)" [formGroup]="subcategoryPostForm">
-          <div class="modal-boy">
-              <div class="container">
-                  <div class="form-group">
-                      <label for="name">SubCategory name:</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="name"/>
-                  </div>
+          <div class="container">
+              <div class="form-group">
+                  <label for="name">SubCategory name:</label>
+                  <input type="text"
+                         class="form-control"
+                         formControlName="name"/>
               </div>
           </div>
           <div class="modal-footer">
@@ -58,10 +57,10 @@ export class SubCategoryPostModalContentComponent {
       .subscribe(
         data => {
           console.log('success!', data);
+          this.activeModal.close('success');
         },
         error => console.error('could not add new subcategory because', error)
       );
-    this.activeModal.dismiss();
   }
 }
 
@@ -70,11 +69,19 @@ export class SubCategoryPostModalContentComponent {
   templateUrl: './sub-category-post-modal.component.html'
 })
 export class SubCategoryPostModalComponent {
+  @Output() submittedSubcategory = new EventEmitter<SubCategory>();
+
   constructor(private modalService: NgbModal) {
   }
 
   open() {
     const modalRef = this.modalService.open(SubCategoryPostModalContentComponent);
+    modalRef.result.then((result) => {
+      console.log('New subcategory submitted!')
+      if ( result === 'success' ) {
+        this.submittedSubcategory.emit();
+      }
+    });
   }
 
 }
