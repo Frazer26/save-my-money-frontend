@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -19,7 +19,8 @@ import {SavedMoneyListComponent} from './savedMoney/saved-money-list/saved-money
 import {ItemEditorForSavedMoneyComponent} from './savedMoney/item-editor-for-saved-money/item-editor-for-saved-money.component';
 import {CostSubCategoryListComponent} from './Cost/cost-sub-category-list/cost-sub-category-list.component';
 import {SubCategoryService} from './sub-category.service';
-import {SubCategoryModalComponent} from './Cost/sub-category-modal/sub-category-modal.component';
+import {SubCategoryPostModalComponent} from './Cost/sub-category-post-modal/sub-category-post-modal.component';
+import {SubCategoryPostModalContentComponent} from './Cost/sub-category-post-modal/sub-category-post-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,16 +34,18 @@ import {SubCategoryModalComponent} from './Cost/sub-category-modal/sub-category-
     SavedMoneyListComponent,
     ItemEditorForSavedMoneyComponent,
     CostSubCategoryListComponent,
-    SubCategoryModalComponent,
+    SubCategoryPostModalComponent,
+    SubCategoryPostModalContentComponent
   ],
   imports: [
     NgbModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
-  entryComponents: [SubCategoryModalComponent],
+  entryComponents: [SubCategoryPostModalContentComponent],
   providers: [ItemService, SubCategoryService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModalOptions, NgbModalRef, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SubCategoryService} from '../../sub-category.service';
 
-// For post
 @Component({
+  selector: 'app-sub-category-post-modal-content',
   template: `
       <div class="modal-header">
           <h4 class="modal-title">Add new SubCategory</h4>
@@ -29,12 +29,10 @@ import {SubCategoryService} from '../../sub-category.service';
                   Add SubCategory
               </button>
           </div>
-
           <pre>FormGroup Item: {{ subcategoryPostForm.getRawValue() | json }}</pre>
-
       </form>`
 })
-export class SubCategoryModalComponent {
+export class SubCategoryPostModalContentComponent {
   modalOptions: NgbModalOptions;
   modal: NgbModalRef;
   subcategoryPostForm: FormGroup;
@@ -64,6 +62,19 @@ export class SubCategoryModalComponent {
         error => console.error('could not add new subcategory because', error)
       );
     this.activeModal.dismiss();
+  }
+}
+
+@Component({
+  selector: 'app-sub-category-post-modal-component',
+  templateUrl: './sub-category-post-modal.component.html'
+})
+export class SubCategoryPostModalComponent {
+  constructor(private modalService: NgbModal) {
+  }
+
+  open() {
+    const modalRef = this.modalService.open(SubCategoryPostModalContentComponent);
   }
 
 }

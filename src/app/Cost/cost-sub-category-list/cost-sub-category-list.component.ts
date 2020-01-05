@@ -2,8 +2,6 @@ import {AfterViewInit, Component} from '@angular/core';
 import {SubCategoryService} from '../../sub-category.service';
 import {SubCategory} from '../../sub-category';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {SubCategoryModalComponent} from '../sub-category-modal/sub-category-modal.component';
 
 @Component({
   selector: 'app-table-list',
@@ -14,8 +12,7 @@ export class CostSubCategoryListComponent implements AfterViewInit {
 
   subcategories: SubCategory[];
 
-  constructor(private subcategoryService: SubCategoryService, private confirmService: ConfirmService,
-              private modalService: NgbModal) {
+  constructor(private subcategoryService: SubCategoryService, private confirmService: ConfirmService) {
   }
 
   getSubCategoryList() {
@@ -41,10 +38,6 @@ export class CostSubCategoryListComponent implements AfterViewInit {
           console.log('success delete');
         });
       });
-  }
-
-  open() {
-    this.modalService.open(SubCategoryModalComponent);
   }
 
 }
