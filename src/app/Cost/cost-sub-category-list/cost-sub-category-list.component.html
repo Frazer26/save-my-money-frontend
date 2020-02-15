@@ -13,7 +13,7 @@
       </td>
       <td>
         <app-sub-category-update-modal-component
-          (click)="setSubCategory(subCategory)" (submittedSubcategory)="getSubCategoryList()"></app-sub-category-update-modal-component>
+          [subcategoryElement]="subCategory" (submittedSubcategory)="getSubCategoryList()"></app-sub-category-update-modal-component>
       </td>
     </tr>
     </tbody>

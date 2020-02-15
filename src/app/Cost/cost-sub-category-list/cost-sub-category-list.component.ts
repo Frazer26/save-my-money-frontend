@@ -40,8 +40,4 @@ export class CostSubCategoryListComponent implements AfterViewInit {
       });
   }
 
-  setSubCategory(subCategory) {
-    this.subcategoryService.setData(subCategory);
-  }
-
 }

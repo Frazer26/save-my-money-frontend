@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SubCategoryService} from '../../sub-category.service';
@@ -53,10 +53,6 @@ export class SubCategoryUpdateModalContentComponent {
     this.subcategoryUpdateForm = this.formBuilder.group({
       name: new FormControl(this.subCategoryFromTable.name, Validators.required),
     });
-
-    // this.subcategoryUpdateForm.setValue({
-    //   name: this.subCategoryFromTable.name,
-    // });
   }
 
   private submitForm(subcategoryPostForm) {
@@ -77,12 +73,16 @@ export class SubCategoryUpdateModalContentComponent {
   templateUrl: './sub-category-update-modal.component.html'
 })
 export class SubCategoryUpdateModalComponent {
+  @Input() subcategoryElement: SubCategory;
   @Output() submittedSubcategory = new EventEmitter<SubCategory>();
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+              private subCategoryService: SubCategoryService) {
   }
 
   open() {
+    this.subCategoryService.setData(this.subcategoryElement);
+
     const modalRef = this.modalService.open(SubCategoryUpdateModalContentComponent);
     modalRef.result.then((result) => {
       console.log('Update subcategory submitted!');
