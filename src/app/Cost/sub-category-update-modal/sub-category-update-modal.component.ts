@@ -5,15 +5,15 @@ import {SubCategoryService} from '../../sub-category.service';
 import {SubCategory} from '../../sub-category';
 
 @Component({
-  selector: 'app-sub-category-post-modal-content',
+  selector: 'app-sub-category-update-modal-content',
   template: `
       <div class="modal-header">
-          <h4 class="modal-title">Add new SubCategory</h4>
+          <h4 class="modal-title">Update SubCategory</h4>
           <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
-      <form (ngSubmit)="submitForm(subcategoryPostForm)" [formGroup]="subcategoryPostForm">
+      <form (ngSubmit)="submitForm(subcategoryUpdateForm)" [formGroup]="subcategoryUpdateForm">
           <div class="container">
               <div class="form-group">
                   <label for="name">SubCategory name:</label>
@@ -24,17 +24,18 @@ import {SubCategory} from '../../sub-category';
           </div>
           <div class="modal-footer">
               <button class="btn btn-success"
-                      [disabled]="!subcategoryPostForm.valid">
-                  Add SubCategory
+                      [disabled]="!subcategoryUpdateForm.valid">
+                  Update SubCategory
               </button>
           </div>
-          <pre>FormGroup Item: {{ subcategoryPostForm.getRawValue() | json }}</pre>
+          <pre>FormGroup Item: {{ subcategoryUpdateForm.getRawValue() | json }}</pre>
       </form>`
 })
-export class SubCategoryPostModalContentComponent {
+export class SubCategoryUpdateModalContentComponent {
   modalOptions: NgbModalOptions;
   modal: NgbModalRef;
-  subcategoryPostForm: FormGroup;
+  subcategoryUpdateForm: FormGroup;
+  private subCategoryFromTable: SubCategory = new SubCategory();
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder,
               private subCategoryService: SubCategoryService
@@ -47,13 +48,19 @@ export class SubCategoryPostModalContentComponent {
   }
 
   private createForm() {
-    this.subcategoryPostForm = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
+    this.subCategoryFromTable = this.subCategoryService.getSubCategory;
+
+    this.subcategoryUpdateForm = this.formBuilder.group({
+      name: new FormControl(this.subCategoryFromTable.name, Validators.required),
     });
+
+    // this.subcategoryUpdateForm.setValue({
+    //   name: this.subCategoryFromTable.name,
+    // });
   }
 
   private submitForm(subcategoryPostForm) {
-    this.subCategoryService.addSubCategoryUnderCost(subcategoryPostForm.getRawValue())
+    this.subCategoryService.updateSubCategory(this.subCategoryFromTable.id, subcategoryPostForm.getRawValue())
       .subscribe(
         data => {
           console.log('success!', data);
@@ -64,21 +71,22 @@ export class SubCategoryPostModalContentComponent {
   }
 }
 
+
 @Component({
-  selector: 'app-sub-category-post-modal-component',
-  templateUrl: './sub-category-post-modal.component.html'
+  selector: 'app-sub-category-update-modal-component',
+  templateUrl: './sub-category-update-modal.component.html'
 })
-export class SubCategoryPostModalComponent {
+export class SubCategoryUpdateModalComponent {
   @Output() submittedSubcategory = new EventEmitter<SubCategory>();
 
   constructor(private modalService: NgbModal) {
   }
 
   open() {
-    const modalRef = this.modalService.open(SubCategoryPostModalContentComponent);
+    const modalRef = this.modalService.open(SubCategoryUpdateModalContentComponent);
     modalRef.result.then((result) => {
-      console.log('New subcategory submitted!');
-      if ( result === 'success' ) {
+      console.log('Update subcategory submitted!');
+      if (result === 'success') {
         this.submittedSubcategory.emit();
       }
     });

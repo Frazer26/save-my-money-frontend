@@ -1,36 +1,27 @@
 <div>
-<!--  <app-datepicker-range (selectedDateRange)="getCostSubCategories()"></app-datepicker-range>-->
   <table id="tables">
     <tr>
       <th>Name</th>
-<!--      <th>Price</th>-->
       <th>Remove</th>
       <th>Edit</th>
     </tr>
     <tbody>
     <tr *ngFor="let subCategory of subcategories">
       <td>{{ subCategory.name }}</td>
-      <button class="btn" (click)="deleteSubCategory(subCategory)"><i class="fa fa-trash"></i></button>
-
       <td>
-<!--        <button class="button btn-dark" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseForm"-->
-<!--                (click)="isCollapsed = !isCollapsed; editItem(subCategory); clicked = true;" [disabled]="clicked">Edit-->
-<!--        </button>-->
+        <button class="btn" (click)="deleteSubCategory(subCategory)"><i class="fa fa-trash"></i></button>
+      </td>
+      <td>
+        <app-sub-category-update-modal-component
+          (click)="setSubCategory(subCategory)" (submittedSubcategory)="getSubCategoryList()"></app-sub-category-update-modal-component>
       </td>
     </tr>
     </tbody>
   </table>
 
-  <app-sub-category-post-modal-component (submittedSubcategory)="getSubCategoryList()"></app-sub-category-post-modal-component>
+  <app-sub-category-post-modal-component
+    (submittedSubcategory)="getSubCategoryList()"></app-sub-category-post-modal-component>
 
-  <!--  <div id="collapseForm" [ngbCollapse]="isCollapsed">-->
-<!--    <div class="card">-->
-<!--      <div class="card-body">-->
-<!--        <app-item-editor-for-saved-money (saveMoneyCreated)="getSavedMoneyList()" (collapse)="isCollapsed=$event"-->
-<!--                                         (enabledButtons)="clicked=$event"></app-item-editor-for-saved-money>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 
   <ng-template appConfirmTemplate>
     <app-confirm-modal></app-confirm-modal>

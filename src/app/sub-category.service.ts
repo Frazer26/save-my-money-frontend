@@ -13,6 +13,7 @@ const httpOptions = {
 export class SubCategoryService {
 
   private readonly subcategoryURL: string;
+  private subCategoryInService: SubCategory;
 
   constructor(private http: HttpClient) {
     this.subcategoryURL = 'http://localhost:8080/budget/COST';
@@ -30,8 +31,17 @@ export class SubCategoryService {
     return this.http.delete<SubCategory[]>(this.subcategoryURL + '/deleteSubcategory/' + subCategory.id);
   }
 
-  //
-  // public updateItem(itemId: number, item: SubCategory) {
-  //   return this.http.put(this.itemUrl + 'updateItem/' + itemId, item, httpOptions);
-  // }
+
+  public updateSubCategory(subCategoryId: number, subCategory: SubCategory) {
+    return this.http.put(this.subcategoryURL + '/updateSubCategory/' + subCategoryId, subCategory, httpOptions);
+  }
+
+  public setData(subcategory) {
+    this.subCategoryInService = subcategory;
+  }
+
+
+  public get getSubCategory(): SubCategory {
+    return this.subCategoryInService;
+  }
 }

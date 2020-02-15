@@ -19,8 +19,14 @@ import {SavedMoneyListComponent} from './savedMoney/saved-money-list/saved-money
 import {ItemEditorForSavedMoneyComponent} from './savedMoney/item-editor-for-saved-money/item-editor-for-saved-money.component';
 import {CostSubCategoryListComponent} from './Cost/cost-sub-category-list/cost-sub-category-list.component';
 import {SubCategoryService} from './sub-category.service';
-import {SubCategoryPostModalComponent} from './Cost/sub-category-post-modal/sub-category-post-modal.component';
-import {SubCategoryPostModalContentComponent} from './Cost/sub-category-post-modal/sub-category-post-modal.component';
+import {
+  SubCategoryPostModalComponent,
+  SubCategoryPostModalContentComponent
+} from './Cost/sub-category-post-modal/sub-category-post-modal.component';
+import {
+  SubCategoryUpdateModalComponent,
+  SubCategoryUpdateModalContentComponent
+} from './Cost/sub-category-update-modal/sub-category-update-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +41,9 @@ import {SubCategoryPostModalContentComponent} from './Cost/sub-category-post-mod
     ItemEditorForSavedMoneyComponent,
     CostSubCategoryListComponent,
     SubCategoryPostModalComponent,
-    SubCategoryPostModalContentComponent
+    SubCategoryPostModalContentComponent,
+    SubCategoryUpdateModalComponent,
+    SubCategoryUpdateModalContentComponent
   ],
   imports: [
     NgbModule,
@@ -45,7 +53,7 @@ import {SubCategoryPostModalContentComponent} from './Cost/sub-category-post-mod
     ReactiveFormsModule,
     FormsModule
   ],
-  entryComponents: [SubCategoryPostModalContentComponent],
+  entryComponents: [SubCategoryPostModalContentComponent, SubCategoryUpdateModalContentComponent],
   providers: [ItemService, SubCategoryService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })
