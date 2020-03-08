@@ -13,9 +13,11 @@ const httpOptions = {
 export class ItemService {
 
   private readonly itemUrl: string;
+  private readonly itemUnderSubCategoryUrl: string;
 
   constructor(private http: HttpClient) {
     this.itemUrl = 'http://localhost:8080/budget/';
+    this.itemUnderSubCategoryUrl = 'http://localhost:8080/budget/subcategory';
   }
 
   public getItemsBetweenDates(mainCategory: string, startDate, endDate): Observable<Item[]> {
@@ -24,6 +26,10 @@ export class ItemService {
       .set('endDate', endDate);
 
     return this.http.get<Item[]>(this.itemUrl + mainCategory, {params});
+  }
+
+  public getAllItemsUnderSubCategories(): Observable<Item[]> {
+    return this.http.get<Item[]>(this.itemUnderSubCategoryUrl);
   }
 
   public addItemUnderMainCategory(mainCategory: string, item: Item) {

@@ -1,20 +1,23 @@
 <div>
-  <table id="tables">
+  <table *ngFor="let subCategory of subcategories" id="tables" class="table">
+    <thead class="thead-light">
     <tr>
-      <th>Name</th>
-      <th>Remove</th>
-      <th>Edit</th>
-    </tr>
-    <tbody>
-    <tr *ngFor="let subCategory of subcategories">
-      <td>{{ subCategory.name }}</td>
-      <td>
+      <th scope="col">{{ subCategory.name }}</th>
+      <th scope="col">
         <button class="btn" (click)="deleteSubCategory(subCategory)"><i class="fa fa-trash"></i></button>
-      </td>
-      <td>
+      </th>
+      <th scope="col">
         <app-sub-category-update-modal-component
-          [subcategoryElement]="subCategory" (submittedSubcategory)="getSubCategoryList()"></app-sub-category-update-modal-component>
-      </td>
+          [subcategoryElement]="subCategory"
+          (submittedSubcategory)="getSubCategoryList()"></app-sub-category-update-modal-component>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let item of items">
+    <tr *ngIf="item.subCategory.name == subCategory.name">
+      <td>{{ item.name }}</td>
+      <td>{{ item.money }}</td>
+      <td>{{ item.date }}</td>
     </tr>
     </tbody>
   </table>

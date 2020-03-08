@@ -2,6 +2,8 @@ import {AfterViewInit, Component} from '@angular/core';
 import {SubCategoryService} from '../../sub-category.service';
 import {SubCategory} from '../../sub-category';
 import {ConfirmService} from '../../shared/confirmation/confirm-service';
+import {ItemService} from '../../item.service';
+import {Item} from '../../item';
 
 @Component({
   selector: 'app-table-list',
@@ -11,20 +13,31 @@ import {ConfirmService} from '../../shared/confirmation/confirm-service';
 export class CostSubCategoryListComponent implements AfterViewInit {
 
   subcategories: SubCategory[];
+  items: Item[];
 
-  constructor(private subcategoryService: SubCategoryService, private confirmService: ConfirmService) {
+  constructor(private subcategoryService: SubCategoryService, private itemService: ItemService,
+              private confirmService: ConfirmService) {
   }
 
   getSubCategoryList() {
-    this.subcategoryService.getSubCategories(
-    ).subscribe(data => {
-        this.subcategories = data;
-      },
-      error => console.log(error));
+    this.subcategoryService.getSubCategories()
+      .subscribe(data => {
+          this.subcategories = data;
+        },
+        error => console.log(error));
+  }
+
+  getAllItemsUnderSubCategories() {
+    this.itemService.getAllItemsUnderSubCategories()
+      .subscribe(data => {
+          this.items = data;
+        },
+        error => console.log(error));
   }
 
   ngAfterViewInit(): void {
     this.getSubCategoryList();
+    this.getAllItemsUnderSubCategories();
   }
 
   deleteSubCategory(subCategory) {
