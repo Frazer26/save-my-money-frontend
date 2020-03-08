@@ -53,4 +53,17 @@ export class CostSubCategoryListComponent implements AfterViewInit {
       });
   }
 
+  deleteItem(item) {
+    this.confirmService.confirm({
+      title: 'Confirm deletion', message: 'Do you really want to delete this Item: '
+        + item.name
+    }).then(
+      () => {
+        this.itemService.deleteItem(item).subscribe(data => {
+          this.getAllItemsUnderSubCategories();
+          console.log('success delete');
+        });
+      });
+  }
+
 }
