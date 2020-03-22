@@ -27,6 +27,7 @@ import {
   SubCategoryUpdateModalComponent,
   SubCategoryUpdateModalContentComponent
 } from './Cost/sub-category-update-modal/sub-category-update-modal.component';
+import {ItemPostModalComponent, ItemPostModalContentComponent} from './Cost/item-post-modal/item-post-modal-component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,9 @@ import {
     SubCategoryPostModalComponent,
     SubCategoryPostModalContentComponent,
     SubCategoryUpdateModalComponent,
-    SubCategoryUpdateModalContentComponent
+    SubCategoryUpdateModalContentComponent,
+    ItemPostModalContentComponent,
+    ItemPostModalComponent
   ],
   imports: [
     NgbModule,
@@ -53,7 +56,8 @@ import {
     ReactiveFormsModule,
     FormsModule
   ],
-  entryComponents: [SubCategoryPostModalContentComponent, SubCategoryUpdateModalContentComponent],
+  entryComponents: [SubCategoryPostModalContentComponent, SubCategoryUpdateModalContentComponent,
+    ItemPostModalContentComponent],
   providers: [ItemService, SubCategoryService, ConfirmService, ConfirmState],
   bootstrap: [AppComponent]
 })

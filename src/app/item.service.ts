@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Item} from './item';
 import {Observable} from 'rxjs';
+import {SubCategory} from "./sub-category";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,7 +18,7 @@ export class ItemService {
 
   constructor(private http: HttpClient) {
     this.itemUrl = 'http://localhost:8080/budget/';
-    this.itemUnderSubCategoryUrl = 'http://localhost:8080/budget/subcategory';
+    this.itemUnderSubCategoryUrl = 'http://localhost:8080/budget/subcategory/';
   }
 
   public getItemsBetweenDates(mainCategory: string, startDate, endDate): Observable<Item[]> {
@@ -34,6 +35,10 @@ export class ItemService {
 
   public addItemUnderMainCategory(mainCategory: string, item: Item) {
     return this.http.post<Item>(this.itemUrl + mainCategory, JSON.stringify(item), httpOptions);
+  }
+
+  public addItemUnderSubCategory(subCategoryName: string, item: Item) {
+    return this.http.post<Item>(this.itemUnderSubCategoryUrl + subCategoryName, JSON.stringify(item), httpOptions);
   }
 
   public deleteItem(item: Item): Observable<Item[]> {

@@ -4,7 +4,11 @@
     <tr>
       <th scope="col">{{ subCategory.name }}</th>
       <th scope="col"></th>
-      <th scope="col">Add Items</th>
+      <th scope="col">
+        <app-item-post-modal-component
+          [subcategoryElement]="subCategory"
+          (submittedItem)="getAllItemsUnderSubCategories()"></app-item-post-modal-component>
+      </th>
       <th scope="col">
         <button class="btn" (click)="deleteSubCategory(subCategory)"><i class="fa fa-trash"></i></button>
       </th>
