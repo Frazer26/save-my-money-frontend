@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Item} from './item';
 import {Observable} from 'rxjs';
-import {SubCategory} from "./sub-category";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -15,6 +14,7 @@ export class ItemService {
 
   private readonly itemUrl: string;
   private readonly itemUnderSubCategoryUrl: string;
+  private item: Item;
 
   constructor(private http: HttpClient) {
     this.itemUrl = 'http://localhost:8080/budget/';
@@ -47,5 +47,13 @@ export class ItemService {
 
   public updateItem(itemId: number, item: Item) {
     return this.http.put(this.itemUrl + 'updateItem/' + itemId, item, httpOptions);
+  }
+
+  public setItem(item) {
+    this.item = item;
+  }
+
+  public get getItem(): Item {
+    return this.item;
   }
 }

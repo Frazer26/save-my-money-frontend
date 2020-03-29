@@ -27,7 +27,11 @@
       <td>
         <button class="btn" (click)="deleteItem(item)"><i class="fa fa-trash-alt"></i></button>
       </td>
-      <td>update</td>
+      <td>
+        <app-item-update-modal-component
+          [itemElement]="item"
+          (updatedItem)="getAllItemsUnderSubCategories()"></app-item-update-modal-component>
+      </td>
     </tr>
     </tbody>
   </table>

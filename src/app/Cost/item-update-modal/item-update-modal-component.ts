@@ -1,23 +1,27 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  NgbActiveModal,
+  NgbDateAdapter,
+  NgbDateNativeAdapter,
+  NgbModal,
+  NgbModalOptions,
+  NgbModalRef
+} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Item} from '../../item';
-import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import {ItemService} from '../../item.service';
-import {SubCategoryService} from '../../sub-category.service';
-import {SubCategory} from '../../sub-category';
 
 @Component({
-  selector: 'app-item-post-modal-content',
+  selector: 'app-item-update-modal-content',
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}],
   template: `
       <div class="modal-header">
-          <h4 class="modal-title">New Item</h4>
+          <h4 class="modal-title">Update Item</h4>
           <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
-      <form (ngSubmit)="submitForm(itemPostForm)" [formGroup]="itemPostForm">
+      <form (ngSubmit)="submitForm(itemUpdateForm)" [formGroup]="itemUpdateForm">
           <div class="container">
               <div class="form-group">
                   <label for="itemName">Name</label>
@@ -49,20 +53,22 @@ import {SubCategory} from '../../sub-category';
           </div>
           <div class="modal-footer">
               <button class="btn btn-success"
-                      [disabled]="!itemPostForm.valid">
+                      [disabled]="!itemUpdateForm.valid">
                   Add Item
               </button>
           </div>
-          <pre>FormGroup Item: {{ itemPostForm.getRawValue() | json }}</pre>
+          <pre>FormGroup Item: {{ itemUpdateForm.getRawValue() | json }}</pre>
       </form>`
 })
-export class ItemPostModalContentComponent {
+export class ItemUpdateModalContentComponent {
   modalOptions: NgbModalOptions;
   modal: NgbModalRef;
-  itemPostForm: FormGroup;
+  itemUpdateForm: FormGroup;
+  private itemFromTable: Item = new Item();
+  private item: Item;
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder,
-              private itemService: ItemService, private subCategoryService: SubCategoryService
+              private itemService: ItemService
   ) {
     this.modalOptions = {
       backdrop: 'static',
@@ -72,45 +78,51 @@ export class ItemPostModalContentComponent {
   }
 
   private createForm() {
-    this.itemPostForm = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      money: new FormControl('', Validators.required),
-      date: new FormControl('', Validators.required)
+    this.itemFromTable = this.itemService.getItem;
+
+    this.itemUpdateForm = this.formBuilder.group({
+      name: this.itemFromTable.name,
+      money: this.itemFromTable.money,
+      date: new Date(this.itemFromTable.date)
     });
   }
 
-  private submitForm(itemPostForm) {
-    this.itemService.addItemUnderSubCategory(this.subCategoryService.getSubCategory.name, itemPostForm.getRawValue())
+  private submitForm(itemUpdateForm) {
+    this.item = this.itemUpdateForm.getRawValue();
+    this.item.subCategory = this.itemFromTable.subCategory;
+
+    this.itemService.updateItem(this.itemFromTable.id, this.item)
       .subscribe(
         data => {
           console.log('success!', data);
           this.activeModal.close('success');
         },
-        error => console.error('could not add new item because', error)
+        error => console.error('could not update item because', error)
       );
   }
 }
 
+
 @Component({
-  selector: 'app-item-post-modal-component',
-  templateUrl: './item-post-modal-component.html',
+  selector: 'app-item-update-modal-component',
+  templateUrl: './item-update-modal-component.html'
 })
-export class ItemPostModalComponent {
-  @Input() subcategoryElement: SubCategory;
-  @Output() submittedItem = new EventEmitter<Item>();
+export class ItemUpdateModalComponent {
+  @Input() itemElement: Item;
+  @Output() updatedItem = new EventEmitter<Item>();
 
   constructor(private modalService: NgbModal,
-              private subCategoryService: SubCategoryService) {
+              private itemService: ItemService) {
   }
 
   open() {
-    this.subCategoryService.setData(this.subcategoryElement);
+    this.itemService.setItem(this.itemElement);
 
-    const modalRef = this.modalService.open(ItemPostModalContentComponent);
+    const modalRef = this.modalService.open(ItemUpdateModalContentComponent);
     modalRef.result.then((result) => {
-      console.log('New item submitted!');
+      console.log('Update item!');
       if (result === 'success') {
-        this.submittedItem.emit();
+        this.updatedItem.emit();
       }
     });
   }
